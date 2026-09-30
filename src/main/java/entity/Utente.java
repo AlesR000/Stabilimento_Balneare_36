@@ -1,16 +1,17 @@
 package entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Utente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String nome;
     private String cognome;
@@ -18,6 +19,7 @@ public class Utente {
     private String passwordHash;
     private String recapitoTelefonico;
 
+    //Costruttore
     public Utente() {}
 
     public Utente(String nome, String cognome, String email, String passwordHash, String recapitoTelefonico) {

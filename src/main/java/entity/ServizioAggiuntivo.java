@@ -1,9 +1,9 @@
 package entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class ServizioAggiuntivo {
@@ -16,6 +16,10 @@ public class ServizioAggiuntivo {
     private long prezzoStandard;
     private int quantita;
     private String descrizione;
+
+    @OneToMany
+    private List<Tariffa> tariffe = new ArrayList<>();
+
 
 
     //Costruttori
