@@ -1,7 +1,6 @@
 package boundary;
 
-import control.ControllerUtenti;
-import entity.ClassificazioneUtente;
+import control.loginControl;
 import entity.Cliente;
 import entity.Gestore;
 import entity.Utente;
@@ -15,8 +14,8 @@ public class FormAccesso {
     private JTextField emailField;
     private JPasswordField passwordField;
     private JButton accediButton;
-    private JComboBox classificazioneBox;
     private JLabel EsitoLabel;
+    private JComboBox classificazioneBox;
 
     //frame per la chiamata ad altre schermate
     private JFrame frameStabilimento;
@@ -30,9 +29,27 @@ public class FormAccesso {
 
                 String email = emailField.getText();
                 String password = passwordField.getText();
-                ClassificazioneUtente classificazione = (ClassificazioneUtente) classificazioneBox.getSelectedItem();
+                String classificazione = classificazioneBox.getSelectedItem().toString();
 
-                Utente utente = ControllerUtenti.controllaAccesso(email, password, classificazione);
+                boolean validitaAccesso = loginControl.controllaAccesso(email, password, classificazione);
+
+                if(validitaAccesso && classificazione == "Cliente"){
+
+                    Cliente cliente = (Cliente) loginControl.restituisciUtente(email, password, classificazione);
+
+                }
+                else if(validitaAccesso && classificazione == "Gestore"){
+
+                    Gestore gestore = (Gestore) loginControl.restituisciUtente(email, password, classificazione);
+                }
+                else{
+                    EsitoLabel.setText("Credenziali non valide");
+                }
+
+/*
+
+                loginControl.controllaAccesso(email,password,classificazione)
+                Utente utente = loginControl.controllaAccesso(email, password, classificazione);
 
                 //Controlla se l'utente esiste ed è un Gestore
                 if (utente != null && utente.getClassificazione() == ClassificazioneUtente.GESTORE) {
@@ -95,8 +112,9 @@ public class FormAccesso {
 
                 emailField.setText("");
                 passwordField.setText("");
+                */
             }
-    });
+        });
     }
 
     public JFrame apriFormAccesso() {
@@ -104,9 +122,6 @@ public class FormAccesso {
         JFrame frame = new JFrame("Accesso Utente");
 
         frame.setContentPane(accessoPanel);
-
-        //Inizializzo i valori ENUM nella comboBox
-        classificazioneBox.setModel(new DefaultComboBoxModel(ClassificazioneUtente.values()));
 
         //Chiude la singola finestra in uscita
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

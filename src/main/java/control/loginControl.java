@@ -3,6 +3,7 @@ package control;
 import entity.Cliente;
 import entity.Gestore;
 import entity.RegistroUtente;
+import entity.Utente;
 
 public class loginControl {
 
@@ -12,6 +13,63 @@ public class loginControl {
 
     private static final PasswordProtezione passwordHasher =
             new PasswordProtezione();
+
+
+    //Operazioni di salvataggio
+    public static int salvaUtente(String nome, String cognome, String email,
+                                  String password, String recapito, String classificazione) {
+
+        boolean validitaDati = validaNome(nome)
+                && validaNome(cognome)
+                && validaRecapito(recapito)
+                && validaEmail(email)
+                && validaPassword(password);
+
+        if(!validitaDati){
+
+            return UTENTE_NON_SALVATO;
+
+        }
+        else if(classificazione == "Cliente"){
+
+            RegistroUtente registro = new RegistroUtente();
+
+            String passwordHash = passwordHasher.hash(password);
+            int recapitoInt = recapitoToInt(recapito);
+
+            Cliente cliente = new Cliente(nome, cognome, email, passwordHash, recapitoInt);
+
+            registro.registroCliente(cliente);
+
+            return CLIENTE_SALVATO;
+        }
+        else if(classificazione == "Gestore"){
+
+            RegistroUtente registro = new RegistroUtente();
+
+            String passwordHash = passwordHasher.hash(password);
+            int recapitoInt = recapitoToInt(recapito);
+
+            Gestore gestore = new Gestore(nome, cognome, email, passwordHash, recapitoInt);
+
+            registro.registroGestore(gestore);
+
+            return GESTORE_SALVATO;
+        }
+
+            return 0;
+    }
+
+    //Operazioni di login
+    public static boolean controllaAccesso(String email, String password, String classificazione){
+        return true;
+    }
+
+    public static Utente restituisciUtente(String email, String password, String classificazione){
+
+        RegistroUtente registro = new RegistroUtente();
+        return registro.cercaUtente(email, password, classificazione);
+    }
 
     //Controlli sulla validità dei dati inseriti dall'utente
     public static boolean validaNome(String nome) {
@@ -72,48 +130,5 @@ public class loginControl {
         return false;
     }
 
-    //Operazioni di salvataggio
-    public static int salvaUtente(String nome, String cognome, String email,
-                                  String password, String recapito, String classificazione) {
 
-        boolean validitaDati = validaNome(nome)
-                && validaNome(cognome)
-                && validaRecapito(recapito)
-                && validaEmail(email)
-                && validaPassword(password);
-
-        if(!validitaDati){
-
-            return UTENTE_NON_SALVATO;
-
-        }
-        else if(classificazione == "Cliente"){
-
-            RegistroUtente registro = new RegistroUtente();
-
-            String passwordHash = passwordHasher.hash(password);
-            int recapitoInt = recapitoToInt(recapito);
-
-            Cliente cliente = new Cliente(nome, cognome, email, passwordHash, recapitoInt);
-
-            registro.registroCliente(cliente);
-
-            return CLIENTE_SALVATO;
-        }
-        else if(classificazione == "Gestore"){
-
-            RegistroUtente registro = new RegistroUtente();
-
-            String passwordHash = passwordHasher.hash(password);
-            int recapitoInt = recapitoToInt(recapito);
-
-            Gestore gestore = new Gestore(nome, cognome, email, passwordHash, recapitoInt);
-
-            registro.registroGestore(gestore);
-
-            return GESTORE_SALVATO;
-        }
-
-            return 0;
-    }
 }
