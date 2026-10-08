@@ -156,6 +156,81 @@ public class GestorePersistenza {
         return risultati.get(0);
     }
 
+    //il booleano indica un ordine ascendente quando è vero, discendente quando è falso
+    public <T> List<T> cercaPerCampoOrdinato(Class<T> classe,
+                                             String nomeCampo,
+                                             Object valore,
+                                             String campoOrdinato,
+                                             boolean ascendente) {
+
+        return cercaPerCampiOrdinato(
+                classe,
+                Map.of(nomeCampo, valore),
+                campoOrdinato,
+                ascendente);
+    }
+
+    public <T> List<T> cercaPerCampiOrdinato(Class<T> classe,
+                                             Map<String, Object> campi,
+                                             String campoOrdinato,
+                                             boolean ascendente){
+
+        EntityManager em = JpaUtil.getInstance().getEntityManager();
+
+        try {
+            StringBuilder jpql = new StringBuilder();
+
+            jpql.append("SELECT e FROM ")
+                    .append(classe.getSimpleName())
+                    .append(" e");
+            if (!campi.isEmpty()) {
+                jpql.append(" WHERE ");
+
+                int contatore = 0;
+
+                for (String nomeCampo : campi.keySet()) {
+                    if (contatore > 0) {
+                        jpql.append(" AND ");
+                    }
+
+                    String nomeParametro = nomeCampo.replace(".", "_");
+
+                    jpql.append("e.")
+                            .append(nomeCampo)
+                            .append(" = :")
+                            .append(nomeParametro);
+
+                    contatore++;
+                }
+            }
+
+            jpql.append(" ORDER BY e.")
+                    .append(campoOrdinato);
+
+            if (ascendente) {
+                jpql.append(" ASC");
+            } else  {
+                jpql.append(" DESC");
+            }
+
+            TypedQuery<T> query = em.createQuery(
+                    jpql.toString(),
+                    classe
+            );
+
+            for (String nomeCampo : campi.keySet()) {
+                String nomeParametro = nomeCampo.replace(".", "_");
+                query.setParameter(nomeParametro, campi.get(nomeCampo));
+            }
+
+            return query.getResultList();
+
+
+        } finally {
+            em.close();
+        }
+    }
+
 
     public <T> T aggiorna(T oggetto) {
 

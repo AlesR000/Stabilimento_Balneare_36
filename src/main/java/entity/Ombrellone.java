@@ -28,7 +28,8 @@ public class Ombrellone {
     //Costruttore
     public Ombrellone() {}
 
-    public Ombrellone(int fila, int posto){
+    public Ombrellone(long prezzoStandard, int fila, int posto){
+        this.prezzoStandard = prezzoStandard;
         this.fila = fila;
         this.posto = posto;
     }
