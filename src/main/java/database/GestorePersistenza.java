@@ -76,6 +76,14 @@ public class GestorePersistenza {
         }
     }
 
+    public <T> List<T> cercaPerClasse(Class<T> classe) {
+
+        return cercaPerCampi(
+                classe,
+                null
+        );
+    }
+
     public <T> List<T> cercaPerCampo(Class<T> classe,
                                      String nomeCampo,
                                      Object valore) {

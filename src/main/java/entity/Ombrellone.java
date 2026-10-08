@@ -12,8 +12,10 @@ public class Ombrellone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private long prezzoStandard;
     private int fila;
     private int posto;
+
 
     @OneToMany
     private List<Prenotazione> prenotazioni = new ArrayList<>();
@@ -33,6 +35,9 @@ public class Ombrellone {
 
     //Getter e Setter
     public Long getId() {return id;}
+
+    public long getPrezzoStandard() {return prezzoStandard;}
+    public void setPrezzoStandard(long prezzoStandard) {}
 
     public int getFila() {return fila;}
     public void setFila(int fila) {this.fila = fila;}

@@ -33,5 +33,25 @@ public class Prenotazione {
     private List<ServizioAggiuntivo> servizi = new ArrayList<>();
 
 
+    //Costruttore
+    public Prenotazione() {}
+
+    public Prenotazione(LocalDate dataPrenotazione, long prezzo, Cliente cliente, Ombrellone ombrellone) {
+        this.dataPrenotazione = dataPrenotazione;
+        this.prezzo = prezzo;
+        this.cliente = cliente;
+        this.ombrellone = ombrellone;
+    }
+
+    public Prenotazione(LocalDate dataPrenotazione, long prezzo, Cliente cliente, Ombrellone ombrellone, List<ServizioAggiuntivo> servizi) {
+        this.dataPrenotazione = dataPrenotazione;
+        this.prezzo = prezzo;
+        this.cliente = cliente;
+        this.ombrellone = ombrellone;
+        this.servizi = servizi;
+    }
+
+    //Getter e Setter
+    public Long getId() {return id;}
 
 }
