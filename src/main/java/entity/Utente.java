@@ -17,12 +17,12 @@ public class Utente {
     private String cognome;
     private String email;
     private String passwordHash;
-    private int recapitoTelefonico;
+    private String recapitoTelefonico;
 
     //Costruttore
     public Utente() {}
 
-    public Utente(String nome, String cognome, String email, String passwordHash, int recapitoTelefonico) {
+    public Utente(String nome, String cognome, String email, String passwordHash, String recapitoTelefonico) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -45,7 +45,7 @@ public class Utente {
     public String getPasswordHash() {return passwordHash;}
     public void setPasswordHash(String passwordHash) {this.passwordHash = passwordHash;}
 
-    public int getRecapitoTelefonico() {return recapitoTelefonico;}
-    public void setRecapitoTelefonico(int recapitoTelefonico){this.recapitoTelefonico = recapitoTelefonico;}
+    public String getRecapitoTelefonico() {return recapitoTelefonico;}
+    public void setRecapitoTelefonico(String recapitoTelefonico){this.recapitoTelefonico = recapitoTelefonico;}
 
 }

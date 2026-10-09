@@ -27,6 +27,7 @@ public class loginControl {
 
         if(!validitaDati){
 
+            System.out.println("Credenziale non valide");
             return UTENTE_NON_SALVATO;
 
         }
@@ -35,9 +36,8 @@ public class loginControl {
             RegistroUtente registro = new RegistroUtente();
 
             String passwordHash = passwordHasher.hash(password);
-            int recapitoInt = recapitoToInt(recapito);
 
-            Cliente cliente = new Cliente(nome, cognome, email, passwordHash, recapitoInt);
+            Cliente cliente = new Cliente(nome, cognome, email, passwordHash, recapito);
 
             registro.registroCliente(cliente);
 
@@ -48,9 +48,8 @@ public class loginControl {
             RegistroUtente registro = new RegistroUtente();
 
             String passwordHash = passwordHasher.hash(password);
-            int recapitoInt = recapitoToInt(recapito);
 
-            Gestore gestore = new Gestore(nome, cognome, email, passwordHash, recapitoInt);
+            Gestore gestore = new Gestore(nome, cognome, email, passwordHash, recapito);
 
             registro.registroGestore(gestore);
 
@@ -77,37 +76,7 @@ public class loginControl {
     }
 
     public static boolean validaRecapito(String recapito) {
-
-        if(recapito.length()!=10){
-            return false;
-        }
-
-        int numero = 0;
-
-        try {
-            numero = Integer.parseInt(recapito);
-
-            System.out.println(numero);
-
-        } catch (NumberFormatException e) {
-            // Il recapito non è un numero valido
-            System.out.println("Inserisci un numero valido");
-            return false;
-        }
-
-        return true;
-    }
-    public static int recapitoToInt(String recapito) {
-        int numero = 0;
-        try {
-            numero = Integer.parseInt(recapito);
-
-            System.out.println(numero);
-        } catch (NumberFormatException e) {
-            // Il recapito non è un numero valido
-            System.out.println("Inserisci un numero valido");
-        }
-        return numero;
+        return recapito != null && recapito.matches("\\d{10}");
     }
 
     public static boolean validaEmail(String email) {
@@ -119,7 +88,7 @@ public class loginControl {
 
     public static boolean validaPassword(String password) {
 
-        if(password.length()<8 && password.length()>15){
+        if(password.length()<8 || password.length()>15){
             return false;
         }
 

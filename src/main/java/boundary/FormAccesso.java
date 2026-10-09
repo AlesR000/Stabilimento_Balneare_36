@@ -3,7 +3,6 @@ package boundary;
 import control.loginControl;
 import entity.Cliente;
 import entity.Gestore;
-import entity.Utente;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -33,19 +32,66 @@ public class FormAccesso {
 
                 boolean validitaAccesso = loginControl.controllaAccesso(email, password, classificazione);
 
+                //ACCESSO SCHERMATA CLIENTE
                 if(validitaAccesso && classificazione == "Cliente"){
 
+                    EsitoLabel.setText("Accesso consentito");
                     Cliente cliente = (Cliente) loginControl.restituisciUtente(email, password, classificazione);
 
+                    if (frameUtenti == null ||
+                            !frameUtenti.isDisplayable()) {
+
+                        //nuovo oggetto schermataUtente
+                        SchermataCliente schermataUtente =
+                                new SchermataCliente(cliente);
+
+
+                        frameUtenti = schermataUtente.apriFormUtente();
+
+                        frameUtenti.setLocationRelativeTo(null);
+                        frameUtenti.setVisible(true);
+
+                    } else {
+
+                        //Se la finestra esiste, viene spostata in avanti
+                        frameUtenti.toFront();
+                        frameUtenti.requestFocus();
+                    }
+
                 }
+                //ACCESSO SCHERMATA GESTORE
                 else if(validitaAccesso && classificazione == "Gestore"){
 
+                    EsitoLabel.setText("Accesso consentito");
                     Gestore gestore = (Gestore) loginControl.restituisciUtente(email, password, classificazione);
+
+                    if (frameStabilimento == null ||
+                            !frameStabilimento.isDisplayable()) {
+
+                        //nuovo oggetto schermataStabilimento
+                        SchermataGestore schermataStabilimento =
+                                new SchermataGestore(gestore);
+
+
+                        frameStabilimento = schermataStabilimento.apriFormStabilimento();
+
+                        frameStabilimento.setLocationRelativeTo(null);
+                        frameStabilimento.setVisible(true);
+
+                    } else {
+
+                        //Se la finestra esiste, viene spostata in avanti
+                        frameStabilimento.toFront();
+                        frameStabilimento.requestFocus();
+                    }
+
                 }
                 else{
                     EsitoLabel.setText("Credenziali non valide");
                 }
 
+                emailField.setText("");
+                passwordField.setText("");
 /*
 
                 loginControl.controllaAccesso(email,password,classificazione)

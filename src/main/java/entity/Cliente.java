@@ -18,7 +18,7 @@ public class Cliente extends Utente{
                     String cognome,
                     String email,
                     String passwordHash,
-                    int recapitoTelefonico) {
+                    String recapitoTelefonico) {
 
         super(nome, cognome, email, passwordHash, recapitoTelefonico);
     }

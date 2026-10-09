@@ -14,7 +14,7 @@ public class SchermataPrincipale extends JFrame{
     private JFrame frameAccesso;
 
     public SchermataPrincipale() {
-        /*
+
         //Chiama il form corrispondente
         iscriviti.addActionListener(new ActionListener() {
             @Override
@@ -66,7 +66,6 @@ public class SchermataPrincipale extends JFrame{
             }
         });
 
-         */
     }
 
     //Funzione chiamata dal main

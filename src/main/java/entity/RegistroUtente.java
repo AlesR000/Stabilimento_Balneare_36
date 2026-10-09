@@ -25,7 +25,7 @@ public class RegistroUtente {
     public Utente cercaUtente(String email, String password, String classificazione){
         Map<String,Object> campi = Map.of(
                 "email", email,
-                "password", password
+                "passwordHash", password
         );
 
         if(classificazione == "Cliente"){
