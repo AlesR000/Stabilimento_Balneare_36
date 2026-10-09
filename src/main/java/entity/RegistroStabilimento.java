@@ -76,6 +76,19 @@ public class RegistroStabilimento {
         return gestorePersistenza.elimina(Tariffa.class, idTariffa);
     }
 
+    //Metodi Ricerca
+    public List<Tariffa> tariffe(){
+
+    }
+
+    public long tariffaOmbrellonePerData(Ombrellone ombrellone, LocalDate data){
+
+    }
+
+    public long tariffaServizioPerData(ServizioAggiuntivo servizioAggiuntivo, LocalDate data){
+
+    }
+
     //Metodi Aggiorna
     public void aggiornaServizio (String nome, long prezzoStandard, int quantita, String descrizione){
 

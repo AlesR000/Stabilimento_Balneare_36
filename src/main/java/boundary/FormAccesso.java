@@ -1,6 +1,6 @@
 package boundary;
 
-import control.loginControl;
+import control.ControlLogin;
 import entity.Cliente;
 import entity.Gestore;
 
@@ -30,20 +30,20 @@ public class FormAccesso {
                 String password = passwordField.getText();
                 String classificazione = classificazioneBox.getSelectedItem().toString();
 
-                boolean validitaAccesso = loginControl.controllaAccesso(email, password, classificazione);
+                boolean validitaAccesso = ControlLogin.controllaAccesso(email, password, classificazione);
 
                 //ACCESSO SCHERMATA CLIENTE
                 if(validitaAccesso && classificazione == "Cliente"){
 
                     EsitoLabel.setText("Accesso consentito");
-                    Cliente cliente = (Cliente) loginControl.restituisciUtente(email, password, classificazione);
+                    Long idCliente = ControlLogin.restituisciIdUtente(email, password, classificazione);
 
                     if (frameUtenti == null ||
                             !frameUtenti.isDisplayable()) {
 
                         //nuovo oggetto schermataUtente
                         SchermataCliente schermataUtente =
-                                new SchermataCliente(cliente);
+                                new SchermataCliente(idCliente);
 
 
                         frameUtenti = schermataUtente.apriFormUtente();
@@ -63,14 +63,14 @@ public class FormAccesso {
                 else if(validitaAccesso && classificazione == "Gestore"){
 
                     EsitoLabel.setText("Accesso consentito");
-                    Gestore gestore = (Gestore) loginControl.restituisciUtente(email, password, classificazione);
+                    Long idGestore = ControlLogin.restituisciIdUtente(email, password, classificazione);
 
                     if (frameStabilimento == null ||
                             !frameStabilimento.isDisplayable()) {
 
                         //nuovo oggetto schermataStabilimento
                         SchermataGestore schermataStabilimento =
-                                new SchermataGestore(gestore);
+                                new SchermataGestore(idGestore);
 
 
                         frameStabilimento = schermataStabilimento.apriFormStabilimento();
@@ -100,13 +100,13 @@ public class FormAccesso {
                 //Controlla se l'utente esiste ed è un Gestore
                 if (utente != null && utente.getClassificazione() == ClassificazioneUtente.GESTORE) {
 
-                    Gestore gestore = (Gestore) utente;
+                    Gestore idGestore = (Gestore) utente;
                     if (frameStabilimento == null ||
                         !frameStabilimento.isDisplayable()) {
 
                     //nuovo oggetto schermataStabilimento
                     SchermataStabilimento schermataStabilimento =
-                            new SchermataStabilimento(gestore);
+                            new SchermataStabilimento(idGestore);
 
 
                     frameStabilimento = schermataStabilimento.apriFormStabilimento();
@@ -126,13 +126,13 @@ public class FormAccesso {
                 //Controlla se l'utente esiste ed è un Cliente
                 else if(utente != null && utente.getClassificazione().equals(ClassificazioneUtente.CLIENTE)){
 
-                    Cliente cliente = (Cliente) utente;
+                    Cliente idCliente = (Cliente) utente;
                     if (frameUtenti == null ||
                             !frameUtenti.isDisplayable()) {
 
                         //nuovo oggetto schermataUtente
                         SchermataUtente schermataUtente =
-                                new SchermataUtente(cliente);
+                                new SchermataUtente(idCliente);
 
 
                         frameUtenti = schermataUtente.apriFormUtente();

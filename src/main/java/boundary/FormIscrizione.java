@@ -1,6 +1,6 @@
 package boundary;
 
-import control.loginControl;
+import control.ControlLogin;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,18 +32,18 @@ public class FormIscrizione {
                 String classificazione = classificazioneBox.getSelectedItem().toString();
 
                 //Check se è utente o cliente
-                int esito = loginControl.salvaUtente(nome, cognome, email, password, recapito, classificazione);
+                int esito = ControlLogin.salvaUtente(nome, cognome, email, password, recapito, classificazione);
 
 
-                if (esito == loginControl.UTENTE_NON_SALVATO){
+                if (esito == ControlLogin.UTENTE_NON_SALVATO){
                     EsitoLabel.setText("Utente non registrato!");
                     System.out.println("Non è stato possibile registrare l'utente.");
                 }
-                else if (esito == loginControl.CLIENTE_SALVATO){
+                else if (esito == ControlLogin.CLIENTE_SALVATO){
                     EsitoLabel.setText("Cliente registrato!");
                     System.out.println("Cliente registrato con successo.");
                 }
-                else if (esito == loginControl.GESTORE_SALVATO){
+                else if (esito == ControlLogin.GESTORE_SALVATO){
                     EsitoLabel.setText("Gestore registrato!");
                     System.out.println("Gestore registrato con successo.");
                 }

@@ -5,7 +5,7 @@ import entity.Gestore;
 import entity.RegistroUtente;
 import entity.Utente;
 
-public class loginControl {
+public class ControlLogin {
 
     public static final int UTENTE_NON_SALVATO = 0;
     public static final int CLIENTE_SALVATO = 1;
@@ -64,10 +64,10 @@ public class loginControl {
         return true;
     }
 
-    public static Utente restituisciUtente(String email, String password, String classificazione){
+    public static Long restituisciIdUtente(String email, String password, String classificazione){
 
         RegistroUtente registro = new RegistroUtente();
-        return registro.cercaUtente(email, password, classificazione);
+        return registro.cercaUtente(email, password, classificazione).getId();
     }
 
     //Controlli sulla validità dei dati inseriti dall'utente

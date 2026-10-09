@@ -1,6 +1,5 @@
 package boundary;
 
-import entity.Cliente;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +14,7 @@ public class SchermataCliente {
     private JLabel benvenutoLabel;
     private JButton logoutButton;
 
-    private Cliente cliente;
+    private Long idCliente;
 
     private JFrame frame;
     //Frame per la chiamata ad una nuova finestra
@@ -39,9 +38,9 @@ public class SchermataCliente {
         return frame;
     }
 
-    public SchermataCliente(Cliente cliente) {
-        this.cliente = cliente;
-        benvenutoLabel.setText("Benvenuto, " + cliente.getNome() + "!");
+    public SchermataCliente(Long idCliente) {
+        this.idCliente = idCliente;
+        benvenutoLabel.setText("Benvenuto!");
         prenotaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,7 +49,7 @@ public class SchermataCliente {
 
                     //nuovo oggetto formEffPrenotazione
                     FormEffettuaPrenotazione formEffettuaPrenotazione =
-                            new FormEffettuaPrenotazione(cliente);
+                            new FormEffettuaPrenotazione(idCliente);
 
 
                     prenotaFrame = formEffettuaPrenotazione.apriFormEffPrenotazione();
@@ -74,7 +73,7 @@ public class SchermataCliente {
 
                     //nuovo oggetto visualizza Prenotazione
                     SchermataPrenotazioniCliente schermataPrenotazioneCliente =
-                            new SchermataPrenotazioniCliente(cliente);
+                            new SchermataPrenotazioniCliente(idCliente);
 
 
                     visualizzaFrame = schermataPrenotazioneCliente.apriPrenotazioniCliente();

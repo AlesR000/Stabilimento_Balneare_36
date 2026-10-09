@@ -1,7 +1,5 @@
 package boundary;
 
-import entity.Gestore;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +13,7 @@ public class SchermataGestore {
     private JButton logoutButton;
     private JLabel benvenutoLabel;
 
-    private Gestore gestore;
+    private Long idGestore;
 
     private JFrame frame;
     private JFrame ombrelloniFrame;
@@ -41,9 +39,9 @@ public class SchermataGestore {
     }
 
 
-    public SchermataGestore(Gestore gestore) {
-        this.gestore = gestore;
-        benvenutoLabel.setText("Benvenuto, " + gestore.getNome() + "!");
+    public SchermataGestore(Long idGestore) {
+        this.idGestore = idGestore;
+        benvenutoLabel.setText("Benvenuto!");
         ombrelloniButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,7 +50,7 @@ public class SchermataGestore {
 
                     //nuovo oggetto formOmbrelloni
                     FormOmbrelloni formOmbrelloni =
-                            new FormOmbrelloni(gestore);
+                            new FormOmbrelloni(idGestore);
 
 
                     ombrelloniFrame = formOmbrelloni.apriFormOmbrelloni();
