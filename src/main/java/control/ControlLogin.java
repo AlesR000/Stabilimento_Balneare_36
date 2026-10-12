@@ -3,7 +3,6 @@ package control;
 import entity.Cliente;
 import entity.Gestore;
 import entity.RegistroUtente;
-import entity.Utente;
 
 public class ControlLogin {
 
@@ -61,7 +60,11 @@ public class ControlLogin {
 
     //Operazioni di login
     public static boolean controllaAccesso(String email, String password, String classificazione){
-        return true;
+
+        RegistroUtente registro = new RegistroUtente();
+
+        return passwordHasher.verify(password,
+                registro.cercaUtente(email, password, classificazione).getPasswordHash());
     }
 
     public static Long restituisciIdUtente(String email, String password, String classificazione){

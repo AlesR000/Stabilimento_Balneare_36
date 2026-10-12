@@ -77,6 +77,33 @@ public class RegistroStabilimento {
     }
 
     //Metodi Ricerca
+    public List<Long> idOmbrelloniFila(int fila){
+        List<Ombrellone> ombrelloni = gestorePersistenza.cercaPerCampoOrdinato(Ombrellone.class,"fila",fila,"posto",true);
+        List<Long> idOmbrelloniFila = new ArrayList<>();
+
+        for (Ombrellone ombrellone: ombrelloni){
+            idOmbrelloniFila.add(ombrellone.getId());
+        }
+
+        return idOmbrelloniFila;
+    }
+
+    public int ultimoPostoPerFila(int fila){
+         List<Ombrellone> ombrelloni = gestorePersistenza.cercaPerCampoOrdinato(
+                        Ombrellone.class,
+                        "fila",
+                        fila,
+                        "posto",
+                        false);
+
+         if(ombrelloni.size() == 0){
+             return 0;
+         }
+
+         return ombrelloni.getFirst().getPosto();
+
+    }
+    /*
     public List<Tariffa> tariffe(){
 
     }
@@ -89,6 +116,8 @@ public class RegistroStabilimento {
 
     }
 
+
+     */
     //Metodi Aggiorna
     public void aggiornaServizio (String nome, long prezzoStandard, int quantita, String descrizione){
 

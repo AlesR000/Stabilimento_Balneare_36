@@ -1,7 +1,5 @@
 package boundary;
 
-
-import control.ControllerPrenotazioni;
 import entity.Cliente;
 import entity.Prenotazione;
 
@@ -23,7 +21,8 @@ public class SchermataPrenotazioniCliente {
 
     public SchermataPrenotazioniCliente(Cliente cliente) {
         this.cliente = cliente;
-
+    }
+        /*
         annullaPrenotazioneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,6 +36,7 @@ public class SchermataPrenotazioniCliente {
                 aggiornaPrenotazioni();
             }
         });
+
     }
 
     public JFrame apriPrenotazioniCliente() {
@@ -57,7 +57,6 @@ public class SchermataPrenotazioniCliente {
         return frame;
 
     }
-
     public void aggiornaPrenotazioni() {
 
         List<Prenotazione> prenotazioni = ControllerPrenotazioni.getPrenotazioniCliente(cliente);
@@ -91,4 +90,6 @@ public class SchermataPrenotazioniCliente {
         prenotazioniPanel.revalidate();
         prenotazioniPanel.repaint();
     }
+
+         */
 }

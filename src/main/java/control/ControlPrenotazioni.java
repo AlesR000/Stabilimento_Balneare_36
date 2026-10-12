@@ -26,7 +26,7 @@ public class ControlPrenotazioni {
         RegistroPrenotazione registroPrenotazione = new RegistroPrenotazione();
 
         registroPrenotazione.RegistraPrenotazione(data,prezzo,cliente,ombrellone,servizi);
-
+        return true;
 
     }
 
@@ -47,11 +47,10 @@ public class ControlPrenotazioni {
         LocalDate oggi = LocalDate.now();
         return !oggi.isBefore(dataPrenotazione);
     }
-
+/*
     public long prezzoPrenotazione (Ombrellone ombrellone, List<ServizioAggiuntivo> servizi){
 
 
-
     }
-
+*/
 }

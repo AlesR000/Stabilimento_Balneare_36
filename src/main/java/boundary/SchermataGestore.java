@@ -49,8 +49,8 @@ public class SchermataGestore {
                         !ombrelloniFrame.isDisplayable()) {
 
                     //nuovo oggetto formOmbrelloni
-                    FormOmbrelloni formOmbrelloni =
-                            new FormOmbrelloni(idGestore);
+                    GestoreOmbrelloni formOmbrelloni =
+                            new GestoreOmbrelloni(idGestore);
 
 
                     ombrelloniFrame = formOmbrelloni.apriFormOmbrelloni();
@@ -66,6 +66,7 @@ public class SchermataGestore {
                 }
             }
         });
+        /*
         serviziButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,6 +138,8 @@ public class SchermataGestore {
                 }
             }
         });
+
+         */
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

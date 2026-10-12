@@ -22,18 +22,23 @@ public class RegistroUtente {
         return registroUtente(gestore);
     }
 
-    public Utente cercaUtente(String email, String password, String classificazione){
-        Map<String,Object> campi = Map.of(
-                "email", email,
-                "passwordHash", password
+    public Utente cercaUtente(
+            String email,
+            String password,
+            String classificazione) {
+
+        Map<String, Object> campi = Map.of(
+                "email", email
         );
 
-        if(classificazione == "Cliente"){
-            return gestorePersistenza.cercaPrimoPerCampi(Cliente.class, campi);
+        if ("Cliente".equals(classificazione)) {
+            return gestorePersistenza.cercaPrimoPerCampi(
+                    Cliente.class, campi);
+        } else if ("Gestore".equals(classificazione)) {
+            return gestorePersistenza.cercaPrimoPerCampi(
+                    Gestore.class, campi);
         }
-        else if(classificazione == "Gestore"){
-            return gestorePersistenza.cercaPrimoPerCampi(Cliente.class, campi);
-        }
+
         return null;
     }
 

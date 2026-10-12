@@ -1,8 +1,6 @@
 package boundary;
 
 import control.ControlLogin;
-import entity.Cliente;
-import entity.Gestore;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,10 +30,12 @@ public class FormAccesso {
 
                 boolean validitaAccesso = ControlLogin.controllaAccesso(email, password, classificazione);
 
-                //ACCESSO SCHERMATA CLIENTE
-                if(validitaAccesso && classificazione == "Cliente"){
+                System.out.println(email + " " + password + " " +  classificazione + " " +  validitaAccesso);
 
-                    EsitoLabel.setText("Accesso consentito");
+                //ACCESSO SCHERMATA CLIENTE
+                if (validitaAccesso && classificazione.equals("Cliente")){
+
+                    EsitoLabel.setText("Accesso cliente consentito");
                     Long idCliente = ControlLogin.restituisciIdUtente(email, password, classificazione);
 
                     if (frameUtenti == null ||
@@ -60,9 +60,9 @@ public class FormAccesso {
 
                 }
                 //ACCESSO SCHERMATA GESTORE
-                else if(validitaAccesso && classificazione == "Gestore"){
+                else if (validitaAccesso && classificazione.equals("Gestore")){
 
-                    EsitoLabel.setText("Accesso consentito");
+                    EsitoLabel.setText("Accesso gestore consentito");
                     Long idGestore = ControlLogin.restituisciIdUtente(email, password, classificazione);
 
                     if (frameStabilimento == null ||
@@ -86,6 +86,7 @@ public class FormAccesso {
                     }
 
                 }
+                //CREDENZIALI NON VALIDE
                 else{
                     EsitoLabel.setText("Credenziali non valide");
                 }

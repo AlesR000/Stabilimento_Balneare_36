@@ -22,7 +22,7 @@ public class SchermataPrincipale extends JFrame{
                 if (frameIscrizione == null ||
                         !frameIscrizione.isDisplayable()) {
 
-                    //nuovo oggetto formIscrizione
+                    //nuovo oggetto formIscrizione                        
                     FormIscrizione formInserimento =
                             new FormIscrizione();
 

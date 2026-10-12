@@ -41,6 +41,8 @@ public class SchermataCliente {
     public SchermataCliente(Long idCliente) {
         this.idCliente = idCliente;
         benvenutoLabel.setText("Benvenuto!");
+
+        /*
         prenotaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -88,6 +90,8 @@ public class SchermataCliente {
                 }
             }
         });
+
+         */
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
