@@ -14,12 +14,28 @@ public class ControlStabilimento {
         RegistroStabilimento registro = new RegistroStabilimento();
 
         int filaInt = filaToInt(fila);
-        if(filaInt == 0 || registro.ultimoPostoPerFila(filaInt) == 0){
+        if(filaInt == 0){
+            System.out.print("Seleziona una fila esistente");
             return false;
         }
 
         int posto =  registro.ultimoPostoPerFila(filaInt) + 1;
         return registro.RegistraOmbrellone(prezzo, filaInt, posto);
+
+    }
+
+    //Funzioni di rimozione
+    public boolean rimuoviOmbrellone(String fila){
+
+        RegistroStabilimento registro = new RegistroStabilimento();
+
+        int filaInt = filaToInt(fila);
+        if(filaInt == 0){
+            System.out.print("Seleziona una fila esistente");
+            return false;
+        }
+
+        return registro.eliminaOmbrellone(filaInt);
 
     }
 

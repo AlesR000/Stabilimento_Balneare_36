@@ -15,9 +15,12 @@ public class RegistroStabilimento {
     //Metodi Registra
     public boolean RegistraOmbrellone (long prezzoStandard, int fila, int posto){
 
-        if(gestorePersistenza.cercaPerClasse(Ombrellone.class) != null)
-        prezzoStandard = gestorePersistenza.cercaPerClasse(Ombrellone.class).getFirst().getPrezzoStandard();
-
+        if(ultimoPostoPerFila(fila) > 0) {
+            prezzoStandard = gestorePersistenza.cercaPerCampoOrdinato(Ombrellone.class,
+                            "fila", fila, "posto", false)
+                    .getFirst()
+                    .getPrezzoStandard();
+        }
         Ombrellone ombrellone = new Ombrellone(prezzoStandard,fila,posto);
         return gestorePersistenza.salva(ombrellone);
 
@@ -54,16 +57,20 @@ public class RegistroStabilimento {
 
     //Metodi Elimina
     public boolean eliminaOmbrellone(int fila){
+
         //Elimina l'ultimo ombrellone della fila
-        List<Ombrellone> ombrelloni = gestorePersistenza.cercaPerCampoOrdinato(
-                Ombrellone.class,
-                "fila",
-                fila, "posto" ,
-                false);
+        if(ultimoPostoPerFila(fila) > 0) {
+            Long idOmbrellone = gestorePersistenza.cercaPerCampoOrdinato(Ombrellone.class,
+                            "fila", fila, "posto", false)
+                    .getFirst()
+                    .getId();
 
-        Long idOmbrellone = ombrelloni.get(0).getId();
+            return gestorePersistenza.elimina(Ombrellone.class, idOmbrellone);
+        }else{
+            System.out.print("non sono presenti ombrelloni");
+            return false;
+        }
 
-        return gestorePersistenza.elimina(Ombrellone.class, idOmbrellone);
     }
 
     public boolean eliminaServizio (ServizioAggiuntivo servizioAggiuntivo){

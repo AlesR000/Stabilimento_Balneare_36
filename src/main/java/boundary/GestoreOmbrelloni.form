@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="ombrelloniPanel" layout-manager="GridLayoutManager" row-count="7" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="40" left="40" bottom="40" right="40"/>
     <constraints>
-      <xy x="20" y="20" width="572" height="400"/>
+      <xy x="20" y="20" width="776" height="504"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -91,9 +91,16 @@
       </component>
       <scrollpane id="a18d4" binding="scrollMap">
         <constraints>
-          <grid row="1" column="2" row-span="3" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="2" row-span="3" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="2" use-parent-layout="false">
+            <minimum-size width="700" height="300"/>
+            <preferred-size width="700" height="300"/>
+            <maximum-size width="700" height="300"/>
+          </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <horizontalScrollBarPolicy value="32"/>
+          <verticalScrollBarPolicy value="21"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="a4e24" binding="mappaPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -102,7 +109,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="d8663" binding="primaFilaPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="d8663" binding="treFilaPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -111,7 +118,7 @@
                 <border type="none"/>
                 <children/>
               </grid>
-              <grid id="b56b1" binding="secondaFilaPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="b56b1" binding="unoFilaPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -120,7 +127,7 @@
                 <border type="none"/>
                 <children/>
               </grid>
-              <grid id="32fe7" binding="terzaFilaPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="32fe7" binding="dueFilaPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>

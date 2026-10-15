@@ -16,9 +16,9 @@ public class GestoreOmbrelloni {
     private JLabel esitoLabel;
     private JScrollPane scrollMap;
     private JPanel mappaPanel;
-    private JPanel primaFilaPanel;
-    private JPanel secondaFilaPanel;
-    private JPanel terzaFilaPanel;
+    private JPanel dueFilaPanel;
+    private JPanel treFilaPanel;
+    private JPanel unoFilaPanel;
 
     private Long idGestore;
     List<Long> idPrimaFila;
@@ -27,14 +27,7 @@ public class GestoreOmbrelloni {
 
     public GestoreOmbrelloni(Long idGestore) {
 
-        this.idGestore = idGestore;
-        idPrimaFila = ControlStabilimento.idOmbrelloniFila(1);
-        idSecondaFila = ControlStabilimento.idOmbrelloniFila(2);
-        idTerzaFila = ControlStabilimento.idOmbrelloniFila(3);
-
-        aggiungiFila(primaFilaPanel, idPrimaFila);
-        aggiungiFila(secondaFilaPanel, idSecondaFila);
-        aggiungiFila(terzaFilaPanel, idTerzaFila);
+        aggiornaMappa();
 
         aggiungiButton.addActionListener(new ActionListener() {
             @Override
@@ -45,18 +38,20 @@ public class GestoreOmbrelloni {
                 boolean add = control.salvaOmbrellone(fila, 5);
                 if (add) {
                     esitoLabel.setText("Ombrellone aggiunto.");
-                    //aggiornaMappa();
+                    aggiornaMappa();
                 } else  {
                     esitoLabel.setText("Operazione fallita.");
                 }
             }
         });
-        /*
+
         rimuoviButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Fila fila = (Fila) filaBox.getSelectedItem();
-                boolean rmv = ControllerOmbrelloni.eliminaOmbrellone(fila);
+
+                String fila = filaBox.getSelectedItem().toString();
+                ControlStabilimento control = new ControlStabilimento();
+                boolean rmv = control.rimuoviOmbrellone(fila);
                 if (rmv) {
                     esitoLabel.setText("Ombrellone rimosso.");
                     aggiornaMappa();
@@ -67,58 +62,12 @@ public class GestoreOmbrelloni {
         });
     }
 
- */
-    }
-
-        /*
-    private void aggiornaMappa(){
-        mappaPanel.removeAll();
-
-        Map<Fila, ArrayList<Ombrellone>> mappa =
-                ControllerOmbrelloni.mappaOmbrelloni();
-
-        mappaPanel.setLayout(new GridLayout(3, 1));
-
-        for (Fila fila : Fila.values()) {
-
-            JPanel filaPanel = new JPanel();
-            filaPanel.setLayout(new BoxLayout(filaPanel, BoxLayout.Y_AXIS));
-
-            JPanel ombrelloniPanel = new JPanel();
-            ombrelloniPanel.setLayout(new BoxLayout(ombrelloniPanel, BoxLayout.X_AXIS));
-
-            for (Ombrellone o : mappa.get(fila)) {
-
-                ombrelloniPanel.add(
-                        new JLabel("[" + o.getNumero_posto() + "]")
-                );
-
-                ombrelloniPanel.add(Box.createHorizontalStrut(10));
-            }
-
-            filaPanel.add(ombrelloniPanel);
-            mappaPanel.add(filaPanel);
-        }
-
-        mappaPanel.revalidate();
-        mappaPanel.repaint();
-    }
-
-         */
-
     public JFrame apriFormOmbrelloni() {
 
         JFrame frame = new JFrame("Gestione ombrelloni");
 
         frame.setContentPane(ombrelloniPanel);
 
-        idPrimaFila = ControlStabilimento.idOmbrelloniFila(1);
-        idSecondaFila = ControlStabilimento.idOmbrelloniFila(2);
-        idTerzaFila = ControlStabilimento.idOmbrelloniFila(3);
-
-        aggiungiFila(primaFilaPanel, idPrimaFila);
-        aggiungiFila(secondaFilaPanel, idSecondaFila);
-        aggiungiFila(terzaFilaPanel, idTerzaFila);
         /*
         scrollMap.setViewportView(mappaPanel);
         Map<Fila, ArrayList<Ombrellone>> mappa = ControllerOmbrelloni.mappaOmbrelloni();
@@ -161,11 +110,26 @@ public class GestoreOmbrelloni {
 
     }
 
+
+    private void aggiornaMappa(){
+
+        this.idGestore = idGestore;
+
+        idPrimaFila = ControlStabilimento.idOmbrelloniFila(1);
+        idSecondaFila = ControlStabilimento.idOmbrelloniFila(2);
+        idTerzaFila = ControlStabilimento.idOmbrelloniFila(3);
+
+        aggiungiFila(unoFilaPanel, idPrimaFila);
+        aggiungiFila(dueFilaPanel, idSecondaFila);
+        aggiungiFila(treFilaPanel, idTerzaFila);
+
+    }
+
     private void aggiungiFila(JPanel filaPanel, List<Long> idOmbrelloni) {
 
         //Ripulisce la fila ogni volta che viene chiamata la funzione
         filaPanel.removeAll();
-        filaPanel.setLayout(new GridLayout(1, idOmbrelloni.size(), 10, 5));
+        filaPanel.setLayout(new GridLayout(1, idOmbrelloni.size(), 10, 10));
 
 
         if (idOmbrelloni.size() == 0) {
@@ -179,8 +143,8 @@ public class GestoreOmbrelloni {
                 Long idOmbrellone = idOmbrelloni.get(i);
 
                 JButton button = new JButton(String.valueOf(i + 1));
-                button.putClientProperty("idOmbrellone", idOmbrellone);
 
+                button.putClientProperty("idOmbrellone", idOmbrellone);
                 filaPanel.add(button);
             }
         }
