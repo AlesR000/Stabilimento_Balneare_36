@@ -55,6 +55,7 @@ public class Tariffa {
 
     public List<Ombrellone> getOmbrelloni() {return ombrelloni;}
     public void addOmbrellone(Ombrellone ombrellone) {ombrelloni.add(ombrellone);}
+    public int getFila(){return ombrelloni.getFirst().getFila();}
 
     public ServizioAggiuntivo getServizio() {return servizio;}
     public void setServizio(ServizioAggiuntivo servizio) {this.servizio = servizio;}

@@ -78,10 +78,25 @@ public class GestorePersistenza {
 
     public <T> List<T> cercaPerClasse(Class<T> classe) {
 
-        return cercaPerCampi(
-                classe,
-                null
-        );
+        EntityManager em = JpaUtil.getInstance().getEntityManager();
+
+        try {
+            StringBuilder jpql = new StringBuilder();
+
+            jpql.append("SELECT e FROM ")
+                    .append(classe.getSimpleName())
+                    .append(" e");
+
+            TypedQuery<T> query = em.createQuery(
+                    jpql.toString(),
+                    classe
+            );
+
+            return query.getResultList();
+
+        } finally {
+            em.close();
+        }
     }
 
     public <T> List<T> cercaPerCampo(Class<T> classe,

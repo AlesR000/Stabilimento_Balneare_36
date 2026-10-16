@@ -13,7 +13,7 @@ public class RegistroStabilimento {
     public RegistroStabilimento(){gestorePersistenza = new GestorePersistenza();}
 
     //Metodi Registra
-    public boolean RegistraOmbrellone (long prezzoStandard, int fila, int posto){
+    public boolean registraOmbrellone(long prezzoStandard, int fila, int posto){
 
         if(ultimoPostoPerFila(fila) > 0) {
             prezzoStandard = gestorePersistenza.cercaPerCampoOrdinato(Ombrellone.class,
@@ -26,16 +26,16 @@ public class RegistroStabilimento {
 
     }
 
-    public boolean RegistraServizio (String nome, long prezzoStandard, int quantita, String descrizione){
+    public boolean registraServizio(String nome, long prezzoStandard, int quantita, String descrizione){
 
         ServizioAggiuntivo servizioAggiuntivo = new ServizioAggiuntivo(nome,prezzoStandard,quantita,descrizione);
         return gestorePersistenza.salva(servizioAggiuntivo);
     }
 
-    public boolean RegistraTariffaOmbrellone (long prezzo,
-                                              LocalDate dataInizio,
-                                              LocalDate dataFine,
-                                              int fila){
+    public boolean registraTariffaOmbrellone(long prezzo,
+                                             LocalDate dataInizio,
+                                             LocalDate dataFine,
+                                             int fila){
 
         List<Ombrellone> ombrelloni = gestorePersistenza.cercaPerCampo(Ombrellone.class, "fila", fila);
 
@@ -44,10 +44,10 @@ public class RegistroStabilimento {
 
     }
 
-    public boolean RegistraTariffaServizio (long prezzo,
-                                            LocalDate dataInizio,
-                                            LocalDate dataFine,
-                                            ServizioAggiuntivo servizioAggiuntivo){
+    public boolean registraTariffaServizio(long prezzo,
+                                           LocalDate dataInizio,
+                                           LocalDate dataFine,
+                                           ServizioAggiuntivo servizioAggiuntivo){
 
         Tariffa tariffa = new Tariffa(prezzo, dataInizio, dataFine, servizioAggiuntivo);
         return gestorePersistenza.salva(tariffa);
@@ -73,9 +73,10 @@ public class RegistroStabilimento {
 
     }
 
-    public boolean eliminaServizio (ServizioAggiuntivo servizioAggiuntivo){
-        Long idServizio = servizioAggiuntivo.getId();
-        return gestorePersistenza.elimina(ServizioAggiuntivo.class, idServizio);
+    public boolean eliminaServizio (Long id){
+
+        return gestorePersistenza.elimina(ServizioAggiuntivo.class, id);
+
     }
 
     public boolean eliminaTariffa(Tariffa tariffa){
@@ -95,26 +96,14 @@ public class RegistroStabilimento {
         return idOmbrelloniFila;
     }
 
-    public int ultimoPostoPerFila(int fila){
-         List<Ombrellone> ombrelloni = gestorePersistenza.cercaPerCampoOrdinato(
-                        Ombrellone.class,
-                        "fila",
-                        fila,
-                        "posto",
-                        false);
-
-         if(ombrelloni.size() == 0){
-             return 0;
-         }
-
-         return ombrelloni.getFirst().getPosto();
-
-    }
-    /*
-    public List<Tariffa> tariffe(){
-
+    public List<ServizioAggiuntivo> ricercaServizi(){
+        return gestorePersistenza.cercaPerClasse(ServizioAggiuntivo.class);
     }
 
+    public List<Tariffa> ricercaTariffe(){
+        return gestorePersistenza.cercaPerClasse(Tariffa.class);
+    }
+/*
     public long tariffaOmbrellonePerData(Ombrellone ombrellone, LocalDate data){
 
     }
@@ -126,15 +115,38 @@ public class RegistroStabilimento {
 
      */
     //Metodi Aggiorna
-    public void aggiornaServizio (String nome, long prezzoStandard, int quantita, String descrizione){
+    public ServizioAggiuntivo aggiornaServizio (Long id, String nome, long prezzoStandard, int quantita, String descrizione){
 
-        ServizioAggiuntivo servizioAggiuntivo = new ServizioAggiuntivo(nome,prezzoStandard,quantita,descrizione);
-        gestorePersistenza.aggiorna(servizioAggiuntivo);
+        ServizioAggiuntivo servizioAggiornato = gestorePersistenza.trovaPerId(ServizioAggiuntivo.class, id);
+
+        servizioAggiornato.setNome(nome);
+        servizioAggiornato.setPrezzoStandard(prezzoStandard);
+        servizioAggiornato.setQuantita(quantita);
+        servizioAggiornato.setDescrizione(descrizione);
+
+        return gestorePersistenza.aggiorna(servizioAggiornato);
 
     }
 
     public void aggiornaTariffa (Tariffa tariffa){
         gestorePersistenza.aggiorna(tariffa);
+    }
+
+    //Metodi ausiliari
+    public int ultimoPostoPerFila(int fila){
+        List<Ombrellone> ombrelloni = gestorePersistenza.cercaPerCampoOrdinato(
+                Ombrellone.class,
+                "fila",
+                fila,
+                "posto",
+                false);
+
+        if(ombrelloni.size() == 0){
+            return 0;
+        }
+
+        return ombrelloni.getFirst().getPosto();
+
     }
 
 }

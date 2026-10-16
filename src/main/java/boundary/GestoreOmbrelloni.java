@@ -27,6 +27,8 @@ public class GestoreOmbrelloni {
 
     public GestoreOmbrelloni(Long idGestore) {
 
+        this.idGestore = idGestore;
+
         aggiornaMappa();
 
         aggiungiButton.addActionListener(new ActionListener() {
@@ -68,36 +70,6 @@ public class GestoreOmbrelloni {
 
         frame.setContentPane(ombrelloniPanel);
 
-        /*
-        scrollMap.setViewportView(mappaPanel);
-        Map<Fila, ArrayList<Ombrellone>> mappa = ControllerOmbrelloni.mappaOmbrelloni();
-        //Crea 3 file per il display degli ombrelloni
-        mappaPanel.setLayout(new GridLayout(3, 1));
-
-        for (Fila fila : Fila.values()) {
-
-            JPanel filaPanel = new JPanel();
-            filaPanel.setLayout(new BoxLayout(filaPanel, BoxLayout.Y_AXIS));
-
-            JPanel ombrelloniPanel = new JPanel();
-            ombrelloniPanel.setLayout(new BoxLayout(ombrelloniPanel, BoxLayout.X_AXIS));
-
-            for (Ombrellone o : mappa.get(fila)) {
-
-                ombrelloniPanel.add(
-                        new JLabel("[" + o.getNumero_posto() + "]")
-                );
-
-                ombrelloniPanel.add(Box.createHorizontalStrut(10));
-            }
-
-            filaPanel.add(ombrelloniPanel);
-            mappaPanel.add(filaPanel);
-        }
-
-        scrollMap.setViewportView(mappaPanel);
-        */
-
         //Chiude la singola finestra in uscita
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -112,8 +84,6 @@ public class GestoreOmbrelloni {
 
 
     private void aggiornaMappa(){
-
-        this.idGestore = idGestore;
 
         idPrimaFila = ControlStabilimento.idOmbrelloniFila(1);
         idSecondaFila = ControlStabilimento.idOmbrelloniFila(2);
