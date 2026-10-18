@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class FormServizi {
+public class GestoreServizi {
     private JTextField nomeField;
     private JTextArea descrizioneArea;
     private JButton aggiungiButton;
@@ -25,7 +25,7 @@ public class FormServizi {
     private Long idGestore;
     private Long servizioSelezionato;
 
-    public FormServizi(Long idGestore) {
+    public GestoreServizi(Long idGestore) {
 
         this.idGestore = idGestore;
 
@@ -161,7 +161,7 @@ public class FormServizi {
     }
 
     public static void main(String[] args) {
-        FormServizi formServizi = new FormServizi(null);
-        formServizi.apriFormServizi();
+        GestoreServizi gestoreServizi = new GestoreServizi(null);
+        gestoreServizi.apriFormServizi();
     }
 }

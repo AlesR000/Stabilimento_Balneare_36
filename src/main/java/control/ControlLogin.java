@@ -24,6 +24,8 @@ public class ControlLogin {
                 && validaEmail(email)
                 && validaPassword(password);
 
+        email.toLowerCase();
+
         if(!validitaDati){
 
             System.out.println("Credenziale non valide");
@@ -62,6 +64,8 @@ public class ControlLogin {
     public static boolean controllaAccesso(String email, String password, String classificazione){
 
         RegistroUtente registro = new RegistroUtente();
+
+        email.toLowerCase();
 
         return passwordHasher.verify(password,
                 registro.cercaUtente(email, password, classificazione).getPasswordHash());

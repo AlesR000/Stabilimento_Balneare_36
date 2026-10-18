@@ -1,8 +1,7 @@
 package boundary;
 
-import entity.Cliente;
-import entity.Ombrellone;
-import entity.ServizioAggiuntivo;
+import control.ControlStabilimento;
+import control.ServizioDTO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,15 +21,24 @@ public class FormEffettuaPrenotazione {
     private JLabel esitoLabel;
     private JSpinner dataSpinner;
     private JPanel mappaPanel;
+    private JPanel unoFilaPanel;
+    private JPanel dueFilaPanel;
+    private JPanel treFilaPanel;
+    private JPanel serviziPanel;
 
-    private Cliente cliente;
+    private Long idCliente;
+
     private int prezzoCorrente;
-    private Date dataCorrente;
-    private Ombrellone ombrelloneSelezionato;
-    private Map<ServizioAggiuntivo, Integer> serviziSelezionati;
+    private Date dataSelezionata;
+    private Long ombrelloneSelezionato;
+    private List<Long> serviziSelezionati;
 
-    /*
-    public FormEffettuaPrenotazione(Cliente cliente) {
+    List<Long> idPrimaFila;
+    List<Long> idSecondaFila;
+    List<Long> idTerzaFila;
+
+
+    public FormEffettuaPrenotazione(Long idCliente) {
 
         SpinnerDateModel model = new SpinnerDateModel();
         dataSpinner.setModel(model);
@@ -39,8 +47,8 @@ public class FormEffettuaPrenotazione {
                 new JSpinner.DateEditor(dataSpinner, "dd/MM/yyyy");
         dataSpinner.setEditor(editor);
 
-        this.cliente = cliente;
-
+        this.idCliente = idCliente;
+        /*
         prenotaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,7 +80,7 @@ public class FormEffettuaPrenotazione {
 
                 boolean risultato = ControllerPrenotazioni.salvaPrenotazione(
                         cliente,
-                        dataCorrente.toInstant()
+                        dataSelezionata.toInstant()
                                 .atZone(ZoneId.systemDefault())
                                 .toLocalDate(),
                         prezzoCorrente,
@@ -89,22 +97,24 @@ public class FormEffettuaPrenotazione {
                 }
 
                 //Refresh della pagina
-                aggiornaOmbrelloni(dataCorrente);
-                aggiornaServizi(dataCorrente);
+                aggiornaMappa(dataSelezionata);
+                aggiornaServizi(dataSelezionata);
             }
         });
 
         dataSpinner.addChangeListener(e -> {
-            dataCorrente = (Date) dataSpinner.getValue();
+            dataSelezionata = (Date) dataSpinner.getValue();
 
             ombrelloneSelezionato = null;
             serviziSelezionati = new HashMap<>();
             prezzoCorrente = 0;
 
-            aggiornaOmbrelloni(dataCorrente);
-            aggiornaServizi(dataCorrente);
+            aggiornaMappa(dataSelezionata);
+            aggiornaServizi(dataSelezionata);
             aggiornaPrezzo();
         });
+
+         */
     }
 
     public JFrame apriFormEffPrenotazione() {
@@ -113,11 +123,15 @@ public class FormEffettuaPrenotazione {
 
         frame.setContentPane(effPrenotazionePanel);
 
-        dataCorrente = (Date) dataSpinner.getValue();
+        dataSelezionata = (Date) dataSpinner.getValue();
 
-        aggiornaOmbrelloni(dataCorrente);
-        aggiornaServizi(dataCorrente);
+        aggiornaMappa();
+        /*
+        aggiornaOmbrelloni(dataSelezionata);
+        aggiornaServizi(dataSelezionata);
         aggiornaPrezzo();
+
+         */
 
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -128,7 +142,7 @@ public class FormEffettuaPrenotazione {
 
         return frame;
     }
-
+    /*
     private void aggiornaOmbrelloni(Date data) {
 
         Map<Fila, ArrayList<Ombrellone>> mappa =
@@ -222,13 +236,13 @@ public class FormEffettuaPrenotazione {
 
     private void aggiornaPrezzo() {
 
-        if (dataCorrente == null) {
+        if (dataSelezionata == null) {
             prezzoCorrente = 0;
             prezzoLabel.setText("Prezzo: 0 €");
             return;
         }
 
-        LocalDate data = dataCorrente.toInstant()
+        LocalDate data = dataSelezionata.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
 
@@ -263,4 +277,90 @@ public class FormEffettuaPrenotazione {
     }
 
      */
+
+    private void aggiornaServizi() {
+
+        //Ripulisce la schermata ogni chiamata
+        serviziPanel.removeAll();
+        serviziPanel.setLayout(new GridLayout(0, 1));
+
+        ControlStabilimento control = new ControlStabilimento();
+        List<ServizioDTO> servizi = control.listaServizi();
+
+        //gruppo per la mutua esclusivita dei pulsanti
+        ButtonGroup buttonGroup = new ButtonGroup();
+
+        if (servizi == null || servizi.isEmpty()) {
+            serviziPanel.add(new JLabel("Non sono presenti servizi"));
+        } else {
+            for (ServizioDTO servizio : servizi) {
+
+                JRadioButton radioButton = new JRadioButton(servizio.getNome());
+                radioButton.putClientProperty("idServizio", servizio.getId());
+
+                radioButton.addActionListener(e -> {
+
+                    servizioSelezionato = servizio.getId();
+                });
+
+                buttonGroup.add(radioButton);
+                serviziPanel.add(radioButton);
+            }
+        }
+
+        serviziPanel.revalidate();
+        serviziPanel.repaint();
+
+        servizioSelezionato = null;
+        nomeField.setText("");
+        descrizioneArea.setText("");
+        prezzoField.setText("");
+        comboBox1.setSelectedIndex(0);
+    }
+
+    private void aggiornaMappa(){
+
+        idPrimaFila = ControlStabilimento.idOmbrelloniFila(1);
+        idSecondaFila = ControlStabilimento.idOmbrelloniFila(2);
+        idTerzaFila = ControlStabilimento.idOmbrelloniFila(3);
+
+        aggiungiFila(unoFilaPanel, idPrimaFila);
+        aggiungiFila(dueFilaPanel, idSecondaFila);
+        aggiungiFila(treFilaPanel, idTerzaFila);
+
+    }
+
+    private void aggiungiFila(JPanel filaPanel, List<Long> idOmbrelloni) {
+
+        //Ripulisce la fila ogni volta che viene chiamata la funzione
+        filaPanel.removeAll();
+        filaPanel.setLayout(new GridLayout(1, idOmbrelloni.size(), 10, 10));
+
+
+        if (idOmbrelloni.size() == 0) {
+            JLabel label = new JLabel();
+
+            label.setText("Non sono presenti ombrelloni all'interno di questa fila");
+            filaPanel.add(label);
+        }
+        else {
+            for (int i = 0; i < idOmbrelloni.size(); i++) {
+                Long idOmbrellone = idOmbrelloni.get(i);
+
+                JButton button = new JButton(String.valueOf(i + 1));
+
+                button.putClientProperty("idOmbrellone", idOmbrellone);
+                filaPanel.add(button);
+            }
+        }
+
+        filaPanel.revalidate();
+        filaPanel.repaint();
+    }
+
+    public static void main(String[] args) {
+        FormEffettuaPrenotazione formEffettuaPrenotazioni = new FormEffettuaPrenotazione(null);
+        formEffettuaPrenotazioni.apriFormEffPrenotazione();
+    }
+
 }

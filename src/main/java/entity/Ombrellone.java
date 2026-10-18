@@ -20,8 +20,7 @@ public class Ombrellone {
     @OneToMany
     private List<Prenotazione> prenotazioni = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable
+    @ManyToMany (mappedBy = "ombrelloni")
     private List<Tariffa> tariffe = new ArrayList<>();
 
 

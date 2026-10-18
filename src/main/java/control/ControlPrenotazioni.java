@@ -31,6 +31,13 @@ public class ControlPrenotazioni {
     }
 
     //Funzioni di Ricerca prenotazione
+    public static List<PrenotazioneDTO> listaPrenotazioni(){
+
+    }
+
+    public static List<PrenotazioneDTO> prenotazioniPerData(LocalDate data){
+
+    }
 
     //Funzioni di Elimina prenotazione
 

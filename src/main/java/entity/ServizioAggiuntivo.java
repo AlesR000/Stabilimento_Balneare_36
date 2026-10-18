@@ -20,8 +20,8 @@ public class ServizioAggiuntivo {
     @OneToMany
     private List<Tariffa> tariffe = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "servizi")
-    private List<Prenotazione> prenotazioni = new ArrayList<>();
+    @OneToMany(mappedBy = "servizi")
+    private List<PrenotazioneServizio> prenotazioni = new ArrayList<>();
 
 
 
@@ -52,4 +52,7 @@ public class ServizioAggiuntivo {
 
     public String getDescrizione() {return descrizione;}
     public void setDescrizione(String descrizione) {this.descrizione = descrizione;}
+
+    public List<Tariffa> getTariffe() {return tariffe;}
+    public void aggiungiTariffa(Tariffa tariffa) {tariffe.add(tariffa);}
 }

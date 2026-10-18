@@ -13,13 +13,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
-public class FormTariffe {
+public class GestoreTariffe {
     private JPanel tariffePanel;
     private JComboBox serviziBox;
     private JTextField prezzoField;
     private JButton aggiungiButton;
     private JButton rimuoviButton;
-    private JButton modificaButton;
     private JSpinner daData;
     private JSpinner aData;
     private JLabel esitoLabel;
@@ -30,7 +29,7 @@ public class FormTariffe {
     private long idGestore;
 
 
-    public FormTariffe(Long idGestore) {
+    public GestoreTariffe(Long idGestore) {
 
         //this.idGestore = idGestore;
 
@@ -46,45 +45,29 @@ public class FormTariffe {
         daData.setEditor(editorDa);
         aData.setEditor(editorA);
 
-        /*
         aggiungiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                float prezzo = Float.parseFloat(prezzoField.getText());
+                ControlStabilimento cs = new ControlStabilimento();
+
+                String prezzo = (prezzoField.getText());
 
                 Date daTemp = (Date) daData.getValue();
                 Date aTemp = (Date) aData.getValue();
                 LocalDate da = daTemp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate a = aTemp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-                if(serviziBox.getSelectedItem() instanceof Fila) {
-                    Fila fila = (Fila) serviziBox.getSelectedItem();
-                    boolean esito = ControllerTariffe.saveTariffaOmbrellone(prezzo, da, a, fila);
+                boolean esito = cs.salvaTariffa(serviziBox.getSelectedIndex(),serviziBox.getSelectedItem().toString(), prezzo, da, a);
 
-                    if(esito) {
-                        esitoLabel.setText("Tariffa aggiunta");
-                    } else {
-                        esitoLabel.setText("Impossibile aggiungere tariffa");
-                    }
-                    aggiornaTariffe();
+                if(esito){
+                    esitoLabel.setText("Tariffa aggiunta");
                 }
-                else if(serviziBox.getSelectedItem() instanceof ServizioAggiuntivo) {
-                    ServizioAggiuntivo servizio = (ServizioAggiuntivo) serviziBox.getSelectedItem();
-                    boolean esito = ControllerTariffe.saveTariffaServizio(prezzo, da, a, servizio);
-
-                    if(esito) {
-                        esitoLabel.setText("Tariffa aggiunta");
-                    } else {
-                        esitoLabel.setText("Impossibile aggiungere tariffa");
-                    }
-                    aggiornaTariffe();
-                }
-                //Il caso non viene mai chiamato in circostanze normali
                 else {
                     esitoLabel.setText("Impossibile aggiungere tariffa");
-                    aggiornaTariffe();
                 }
+
+                aggiornaTariffe();
             }
 
         });
@@ -93,7 +76,8 @@ public class FormTariffe {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                boolean esito = ControllerTariffe.deleteTariffa(tariffaSelezionata);
+                ControlStabilimento cs = new ControlStabilimento();
+                boolean esito = cs.rimuoviTariffa(tariffaSelezionata);
                 if(esito) {
                     esitoLabel.setText("Tariffa rimossa");
                 }
@@ -105,49 +89,7 @@ public class FormTariffe {
 
         });
 
-        modificaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-                float prezzo = Float.parseFloat(prezzoField.getText());
-
-                Date daTemp = (Date) daData.getValue();
-                Date aTemp = (Date) aData.getValue();
-                LocalDate da = daTemp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                LocalDate a = aTemp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-                if(serviziBox.getSelectedItem() instanceof Fila) {
-                    Fila fila = (Fila) serviziBox.getSelectedItem();
-                    boolean esito = ControllerTariffe.updateTariffaOmbrellone(prezzo, da, a, fila, tariffaSelezionata);
-
-                    if(esito) {
-                        esitoLabel.setText("Tariffa modificata");
-                    } else {
-                        esitoLabel.setText("Impossibile modificare tariffa");
-                    }
-                    aggiornaTariffe();
-                }
-                else if(serviziBox.getSelectedItem() instanceof ServizioAggiuntivo) {
-                    ServizioAggiuntivo servizio = (ServizioAggiuntivo) serviziBox.getSelectedItem();
-                    boolean esito = ControllerTariffe.updateTariffaServizio(prezzo, da, a, servizio, tariffaSelezionata);
-
-                    if(esito) {
-                        esitoLabel.setText("Tariffa modificata");
-                    } else {
-                        esitoLabel.setText("Impossibile modificare tariffa");
-                    }
-                    aggiornaTariffe();
-                }
-                //Il caso non viene mai chiamato in circostanze normali
-                else {
-                    esitoLabel.setText("Impossibile aggiungere tariffa");
-                    aggiornaTariffe();
-                }
-            }
-
-        });
-
-         */
     }
 
     public JFrame apriFormTariffe() {
@@ -194,7 +136,7 @@ public class FormTariffe {
 
                 JRadioButton radioButton = new JRadioButton(
                         String.format(
-                                "Prezzo: %.2f €    %s   Dal: %s    Al: %s",
+                                "Prezzo: %d €    %s   Dal: %s    Al: %s",
                                 tariffa.getPrezzo(),
                                 tariffa.getAssociazione(),
                                 tariffa.getDataInizio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
@@ -253,28 +195,18 @@ public class FormTariffe {
         ControlStabilimento control = new ControlStabilimento();
         List<ServizioDTO> servizi = control.listaServizi();
 
-        for (ServizioDTO servizio : servizi) {
-            serviziBox.addItem(servizio.getNome());
+        if (servizi == null || servizi.isEmpty()) {
+
         }
-        /*
-        DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>();
-        List<ServizioAggiuntivo> servizi = ControllerServizi.getServiziAggiuntivi();
-
-        for (Fila fila : Fila.values()) {
-            model.addElement(fila);
+        else {
+            for (ServizioDTO servizio : servizi) {
+                serviziBox.addItem(servizio.getNome());
+            }
         }
-
-        for (ServizioAggiuntivo servizio : servizi) {
-            model.addElement(servizio);
-        }
-
-        serviziBox.setModel(model);
-
-         */
     }
 
     public static void main(String[] args) {
-        FormTariffe formTariffe = new FormTariffe(null);
-        formTariffe.apriFormTariffe();
+        GestoreTariffe gestoreTariffe = new GestoreTariffe(null);
+        gestoreTariffe.apriFormTariffe();
     }
 }

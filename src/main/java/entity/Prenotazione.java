@@ -24,13 +24,8 @@ public class Prenotazione {
     @JoinColumn(name = "ombrellone_id", nullable = false)
     private Ombrellone ombrellone;
 
-    @ManyToMany
-    @JoinTable(
-            name = "prenotazione_servizio",
-            joinColumns = @JoinColumn(name = "prenotazione_id"),
-            inverseJoinColumns = @JoinColumn(name = "servizio_id")
-    )
-    private List<ServizioAggiuntivo> servizi = new ArrayList<>();
+    @OneToMany(mappedBy = "prenotazione", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PrenotazioneServizio> servizi = new ArrayList<>();
 
 
     //Costruttore
@@ -43,15 +38,23 @@ public class Prenotazione {
         this.ombrellone = ombrellone;
     }
 
-    public Prenotazione(LocalDate dataPrenotazione, long prezzo, Cliente cliente, Ombrellone ombrellone, List<ServizioAggiuntivo> servizi) {
+    public Prenotazione(LocalDate dataPrenotazione, long prezzo, Cliente cliente, Ombrellone ombrellone, List<ServizioAggiuntivo> servizi, List<Integer> quantita) {
         this.dataPrenotazione = dataPrenotazione;
         this.prezzo = prezzo;
         this.cliente = cliente;
         this.ombrellone = ombrellone;
-        this.servizi = servizi;
+
+        for (int i = 0; i < servizi.size(); i++) {
+            aggiungiServizio(servizi.get(i), quantita.get(i));
+        }
+
     }
 
     //Getter e Setter
     public Long getId() {return id;}
+
+    public void aggiungiServizio(ServizioAggiuntivo servizio, int quantita) {
+        servizi.add(new PrenotazioneServizio(this, servizio, quantita));
+    }
 
 }

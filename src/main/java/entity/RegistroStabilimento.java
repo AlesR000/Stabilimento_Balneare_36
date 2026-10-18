@@ -5,6 +5,7 @@ import database.GestorePersistenza;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //Classe intermedia per registrare elementi nello stabilimento
 public class RegistroStabilimento {
@@ -38,8 +39,8 @@ public class RegistroStabilimento {
                                              int fila){
 
         List<Ombrellone> ombrelloni = gestorePersistenza.cercaPerCampo(Ombrellone.class, "fila", fila);
-
         Tariffa tariffa = new Tariffa(prezzo, dataInizio, dataFine, ombrelloni);
+
         return gestorePersistenza.salva(tariffa);
 
     }
@@ -50,6 +51,7 @@ public class RegistroStabilimento {
                                            ServizioAggiuntivo servizioAggiuntivo){
 
         Tariffa tariffa = new Tariffa(prezzo, dataInizio, dataFine, servizioAggiuntivo);
+
         return gestorePersistenza.salva(tariffa);
 
     }
@@ -79,9 +81,10 @@ public class RegistroStabilimento {
 
     }
 
-    public boolean eliminaTariffa(Tariffa tariffa){
-        Long idTariffa = tariffa.getId();
-        return gestorePersistenza.elimina(Tariffa.class, idTariffa);
+    public boolean eliminaTariffa(Long id){
+
+        return gestorePersistenza.elimina(Tariffa.class, id);
+        
     }
 
     //Metodi Ricerca
@@ -100,8 +103,25 @@ public class RegistroStabilimento {
         return gestorePersistenza.cercaPerClasse(ServizioAggiuntivo.class);
     }
 
+    public ServizioAggiuntivo servizioPerNome(String nome){
+
+        Map<String, Object> campi = Map.of(
+                "nome", nome
+        );
+
+        return gestorePersistenza.cercaPrimoPerCampi(ServizioAggiuntivo.class, campi);
+
+    }
+
     public List<Tariffa> ricercaTariffe(){
-        return gestorePersistenza.cercaPerClasse(Tariffa.class);
+
+        List<Tariffa> tariffaOmb = gestorePersistenza.cercaPerClasseConJoin(Tariffa.class, "ombrelloni");
+        List<Tariffa> tariffaSer = gestorePersistenza.cercaPerClasseConJoin(Tariffa.class, "servizio");
+        List<Tariffa> lista = new ArrayList<>();
+        lista.addAll(tariffaOmb);
+        lista.addAll(tariffaSer);
+
+        return lista;
     }
 /*
     public long tariffaOmbrellonePerData(Ombrellone ombrellone, LocalDate data){

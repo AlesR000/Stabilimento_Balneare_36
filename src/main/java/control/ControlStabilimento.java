@@ -4,8 +4,10 @@ import entity.RegistroStabilimento;
 import entity.ServizioAggiuntivo;
 import entity.Tariffa;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ControlStabilimento {
 
@@ -33,8 +35,27 @@ public class ControlStabilimento {
             System.out.print("Seleziona una prezzo valido");
             return false;
         }
+        if (registro.servizioPerNome(nome) != null){
+            System.out.print("servizio con lo stesso nome esistente");
+            return false;
+        }
 
         return registro.registraServizio(nome, prezzoLong, quantita, descrizione);
+    }
+
+    public boolean salvaTariffa(int indice, String associazione, String prezzo, LocalDate dataInizio, LocalDate dataFine){
+        RegistroStabilimento registro = new RegistroStabilimento();
+
+        long prezzoLong = prezzoToLong(prezzo);
+
+        if (indice < 3){
+            return registro.registraTariffaOmbrellone(prezzoLong, dataInizio, dataFine, indice + 1);
+        }
+        else {
+            ServizioAggiuntivo serAgg = registro.servizioPerNome(associazione);
+            return registro.registraTariffaServizio(prezzoLong, dataInizio, dataFine, serAgg);
+        }
+
     }
 
     //Funzioni di rimozione
@@ -56,6 +77,14 @@ public class ControlStabilimento {
 
         RegistroStabilimento registro = new RegistroStabilimento();
         return registro.eliminaServizio(id);
+
+    }
+
+    public boolean rimuoviTariffa(Long id){
+
+        RegistroStabilimento registro = new RegistroStabilimento();
+
+        return registro.eliminaTariffa(id);
 
     }
 
@@ -100,6 +129,8 @@ public class ControlStabilimento {
         }
     }
 
+    //public Map<ServizioDTO, Integer> listaServiziDisponibiliInData (LocalDate data){}
+
     public static List<TariffaDTO> listaTariffe(){
 
         RegistroStabilimento registro = new RegistroStabilimento();
@@ -114,11 +145,12 @@ public class ControlStabilimento {
             for(int i = 0; i < listaTariffe.size(); i++){
                 Tariffa tariffa = listaTariffe.get(i);
                 String associazione;
-                if(!tariffa.getOmbrelloni().isEmpty()){
+
+
+                if (tariffa.getServizio() == null) {
                     int fila = tariffa.getFila();
                     associazione = filaToString(fila);
-                }
-                else{
+                } else {
                     associazione = tariffa.getServizio().getNome();
                 }
 

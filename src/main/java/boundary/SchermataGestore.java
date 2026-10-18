@@ -66,7 +66,7 @@ public class SchermataGestore {
                 }
             }
         });
-        /*
+
         serviziButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,11 +74,11 @@ public class SchermataGestore {
                         !serviziFrame.isDisplayable()) {
 
                     //nuovo oggetto formServizio
-                    FormServizi formServizio =
-                            new FormServizi();
+                    GestoreServizi gestoreServizio =
+                            new GestoreServizi(idGestore);
 
 
-                    serviziFrame = formServizio.apriFormServizi();
+                    serviziFrame = gestoreServizio.apriFormServizi();
 
                     serviziFrame.setLocationRelativeTo(null);
                     serviziFrame.setVisible(true);
@@ -98,8 +98,8 @@ public class SchermataGestore {
                         !tariffeFrame.isDisplayable()) {
 
                     //nuovo oggetto formTariffa
-                    FormTariffe formTariffa =
-                            new FormTariffe();
+                    GestoreTariffe formTariffa =
+                            new GestoreTariffe(idGestore);
 
 
                     tariffeFrame = formTariffa.apriFormTariffe();
@@ -115,6 +115,7 @@ public class SchermataGestore {
                 }
             }
         });
+        /*
         prenotazioniButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -22,7 +22,8 @@ public class Tariffa {
     @JoinColumn(name = "servizio_id")
     private ServizioAggiuntivo servizio;
 
-    @ManyToMany(mappedBy = "tariffe")
+    @ManyToMany
+    @JoinTable
     private List<Ombrellone> ombrelloni = new ArrayList<>();
 
     //Costruttore
