@@ -32,7 +32,7 @@ class ControlLoginTest {
     }
 
     @Test
-    void salvaPasswordErrataTest(){
+    void passwordErrataTest(){
 
         int salvato = ControlLogin.salvaUtente("Antonio", "Giallo", "AntonioGiallo@gmail.com",
                 "giallo", "0811231234", "Gestore");
@@ -41,5 +41,22 @@ class ControlLoginTest {
 
     }
 
+    @Test
+    void mailErrataTest(){
+
+        int salvato = ControlLogin.salvaUtente("Antonio", "Giallo", "agmail!",
+                "Antonio123!", "0811231234", "Cliente");
+
+        Assertions.assertEquals(0, salvato);
+    }
+
+    @Test
+    void recapitoLungoTest(){
+
+        int salvato = ControlLogin.salvaUtente("Antonio", "Giallo", "AntonioGiallo@gmail.com",
+                "Antonio123!", "08112321321323123131234", "Cliente");
+
+        Assertions.assertEquals(0, salvato);
+    }
 
 }

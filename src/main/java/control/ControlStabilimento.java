@@ -80,6 +80,9 @@ public class ControlStabilimento {
     }
 
     public boolean rimuoviServizio(Long id){
+        if(id == null){
+            return false;
+        }
 
         RegistroStabilimento registro = new RegistroStabilimento();
         return registro.eliminaServizio(id);
@@ -87,9 +90,11 @@ public class ControlStabilimento {
     }
 
     public boolean rimuoviTariffa(Long id){
+        if(id == null){
+            return false;
+        }
 
         RegistroStabilimento registro = new RegistroStabilimento();
-
         return registro.eliminaTariffa(id);
 
     }

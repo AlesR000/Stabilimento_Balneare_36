@@ -145,18 +145,6 @@ public class ControlPrenotazioni {
         return risultato;
     }
 
-    /*
-    public DisponibilitaDTO disponibilitaInData(LocalDate data){
-
-        RegistroPrenotazione registroPrenotazione = new RegistroPrenotazione();
-
-        List<Prenotazione> prenotazioni = registroPrenotazione.cercaPrenotazioniPerData(data);
-    }
-
-
-
-     */
-
     public static List<ServizioDTO> listaServiziData(LocalDate data){
         RegistroStabilimento registro = new RegistroStabilimento();
         List<ServizioAggiuntivo> serviziAggiuntivi = registro.ricercaServizi();
@@ -183,14 +171,6 @@ public class ControlPrenotazioni {
             return listaServiziDTO;
         }
     }
-    /*
-    public static List<PrenotazioneDTO> prenotazioniPerData(LocalDate data){
-
-    }
-
-     */
-
-
 
     //Funzioni di Elimina prenotazione
     public boolean eliminaPrenotazione(LocalDate data, Long idPrenotazione){
