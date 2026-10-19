@@ -264,9 +264,5 @@ public class ClientePrenotazione {
         filaPanel.repaint();
     }
 
-    public static void main(String[] args) {
-        ClientePrenotazione formEffettuaPrenotazioni = new ClientePrenotazione(null);
-        formEffettuaPrenotazioni.apriFormEffPrenotazione();
-    }
 
 }

@@ -205,8 +205,6 @@ public class GestoreTariffe {
         }
     }
 
-    public static void main(String[] args) {
-        GestoreTariffe gestoreTariffe = new GestoreTariffe(null);
-        gestoreTariffe.apriFormTariffe();
-    }
+
+
 }

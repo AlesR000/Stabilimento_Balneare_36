@@ -160,8 +160,6 @@ public class GestoreServizi {
         comboBox1.setSelectedIndex(0);
     }
 
-    public static void main(String[] args) {
-        GestoreServizi gestoreServizi = new GestoreServizi(null);
-        gestoreServizi.apriFormServizi();
-    }
+
+
 }

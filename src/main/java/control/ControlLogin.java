@@ -3,6 +3,7 @@ package control;
 import entity.Cliente;
 import entity.Gestore;
 import entity.RegistroUtente;
+import entity.Utente;
 
 public class ControlLogin {
 
@@ -67,8 +68,11 @@ public class ControlLogin {
 
         email.toLowerCase();
 
-        return passwordHasher.verify(password,
-                registro.cercaUtente(email, password, classificazione).getPasswordHash());
+        Utente utente = registro.cercaUtente(email, password, classificazione);
+        if(utente == null){
+            return false;
+        }
+        return passwordHasher.verify(password, utente.getPasswordHash());
     }
 
     public static Long restituisciIdUtente(String email, String password, String classificazione){

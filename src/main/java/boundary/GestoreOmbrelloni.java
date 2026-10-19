@@ -123,9 +123,6 @@ public class GestoreOmbrelloni {
         filaPanel.repaint();
     }
 
-    public static void main(String[] args) {
-        GestoreOmbrelloni gestoreOmbrelloni = new GestoreOmbrelloni(null);
-        gestoreOmbrelloni.apriFormOmbrelloni();
-    }
+
 
 }
