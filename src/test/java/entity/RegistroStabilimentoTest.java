@@ -45,9 +45,21 @@ class RegistroStabilimentoTest {
         Assertions.assertNotEquals(0, esito);
     }
 
-
-
     @Test
-    void ultimoPostoPerFila() {
+    void servizioPerNomeInesistente() {
+        RegistroStabilimento registro = new RegistroStabilimento();
+
+        ServizioAggiuntivo servizio = registro.servizioPerNome("Servizio non registrato");
+        boolean esito;
+
+        if (servizio != null) {
+            esito = true;
+        }
+        else {
+            esito = false;
+        }
+
+        assertFalse(esito);
+
     }
 }
