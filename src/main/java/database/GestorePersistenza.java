@@ -118,6 +118,25 @@ public class GestorePersistenza {
         }
     }
 
+    public <T> List<T> cercaPerClasseConLeftJoin(
+            Class<T> classe,
+            String associazione) {
+
+        EntityManager em = JpaUtil.getInstance().getEntityManager();
+
+        try {
+            String jpql = "SELECT DISTINCT e FROM "
+                    + classe.getSimpleName()
+                    + " e LEFT JOIN FETCH e."
+                    + associazione;
+
+            return em.createQuery(jpql, classe).getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
+
     public <T> List<T> cercaPerCampo(Class<T> classe,
                                      String nomeCampo,
                                      Object valore) {

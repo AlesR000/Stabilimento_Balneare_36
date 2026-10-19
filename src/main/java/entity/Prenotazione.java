@@ -25,7 +25,8 @@ public class Prenotazione {
     private Ombrellone ombrellone;
 
     @OneToMany(mappedBy = "prenotazione", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PrenotazioneServizio> servizi = new ArrayList<>();
+    private List<PrenotazioneServizio> prenotazioniConServizio = new ArrayList<>();
+
 
 
     //Costruttore
@@ -38,14 +39,14 @@ public class Prenotazione {
         this.ombrellone = ombrellone;
     }
 
-    public Prenotazione(LocalDate dataPrenotazione, long prezzo, Cliente cliente, Ombrellone ombrellone, List<ServizioAggiuntivo> servizi, List<Integer> quantita) {
+    public Prenotazione(LocalDate dataPrenotazione, long prezzo, Cliente cliente, Ombrellone ombrellone, List<PrenotazioneServizio> prenotazioneSer) {
         this.dataPrenotazione = dataPrenotazione;
         this.prezzo = prezzo;
         this.cliente = cliente;
         this.ombrellone = ombrellone;
 
-        for (int i = 0; i < servizi.size(); i++) {
-            aggiungiServizio(servizi.get(i), quantita.get(i));
+        for (int i = 0; i < prenotazioneSer.size(); i++) {
+            aggiungiPrenotazioneServizio(prenotazioneSer.get(i));
         }
 
     }
@@ -53,8 +54,20 @@ public class Prenotazione {
     //Getter e Setter
     public Long getId() {return id;}
 
-    public void aggiungiServizio(ServizioAggiuntivo servizio, int quantita) {
-        servizi.add(new PrenotazioneServizio(this, servizio, quantita));
+    public void aggiungiPrenotazioneServizio(PrenotazioneServizio prenotazioneServizio) {
+        prenotazioniConServizio.add(prenotazioneServizio);
     }
+
+    public Ombrellone getOmbrellone() {return ombrellone;}
+    public void setOmbrellone(Ombrellone ombrellone) {this.ombrellone = ombrellone;}
+
+    public Cliente getCliente() {return cliente;}
+    public void setCliente(Cliente cliente) {this.cliente = cliente;}
+
+    public LocalDate getDataPrenotazione() {return dataPrenotazione;}
+
+    public List<PrenotazioneServizio> getPrenotazioniConServizio() {return prenotazioniConServizio;}
+    public void setPrenotazioniConServizio(List<PrenotazioneServizio> prenotazioniConServizio){this.prenotazioniConServizio = prenotazioniConServizio;}
+
 
 }

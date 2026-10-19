@@ -84,7 +84,7 @@ public class RegistroStabilimento {
     public boolean eliminaTariffa(Long id){
 
         return gestorePersistenza.elimina(Tariffa.class, id);
-        
+
     }
 
     //Metodi Ricerca
@@ -123,17 +123,17 @@ public class RegistroStabilimento {
 
         return lista;
     }
-/*
-    public long tariffaOmbrellonePerData(Ombrellone ombrellone, LocalDate data){
 
+    public List<Ombrellone> tariffaOmbrellone(){
+        return gestorePersistenza.cercaPerClasseConLeftJoin(Ombrellone.class, "tariffe");
     }
 
-    public long tariffaServizioPerData(ServizioAggiuntivo servizioAggiuntivo, LocalDate data){
-
+    public List<ServizioAggiuntivo> tariffaServizio(){
+        return gestorePersistenza.cercaPerClasseConLeftJoin(ServizioAggiuntivo.class, "tariffe");
     }
 
 
-     */
+
     //Metodi Aggiorna
     public ServizioAggiuntivo aggiornaServizio (Long id, String nome, long prezzoStandard, int quantita, String descrizione){
 

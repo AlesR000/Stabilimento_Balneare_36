@@ -42,7 +42,6 @@ public class SchermataCliente {
         this.idCliente = idCliente;
         benvenutoLabel.setText("Benvenuto!");
 
-        /*
         prenotaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,11 +49,11 @@ public class SchermataCliente {
                         !prenotaFrame.isDisplayable()) {
 
                     //nuovo oggetto formEffPrenotazione
-                    FormEffettuaPrenotazione formEffettuaPrenotazione =
-                            new FormEffettuaPrenotazione(idCliente);
+                    ClientePrenotazione clientePrenotazione =
+                            new ClientePrenotazione(idCliente);
 
 
-                    prenotaFrame = formEffettuaPrenotazione.apriFormEffPrenotazione();
+                    prenotaFrame = clientePrenotazione.apriFormEffPrenotazione();
 
                     prenotaFrame.setLocationRelativeTo(null);
                     prenotaFrame.setVisible(true);
@@ -67,6 +66,7 @@ public class SchermataCliente {
                 }
             }
         });
+
         visualizzaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,8 +74,8 @@ public class SchermataCliente {
                         !visualizzaFrame.isDisplayable()) {
 
                     //nuovo oggetto visualizza Prenotazione
-                    SchermataPrenotazioniCliente schermataPrenotazioneCliente =
-                            new SchermataPrenotazioniCliente(idCliente);
+                    ClienteVisualizzaPrenotazione schermataPrenotazioneCliente =
+                            new ClienteVisualizzaPrenotazione(idCliente);
 
 
                     visualizzaFrame = schermataPrenotazioneCliente.apriPrenotazioniCliente();
@@ -91,7 +91,7 @@ public class SchermataCliente {
             }
         });
 
-         */
+
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

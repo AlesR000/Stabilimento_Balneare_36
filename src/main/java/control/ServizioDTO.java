@@ -8,6 +8,8 @@ public class ServizioDTO {
     private int quantita;
     private String descrizione;
 
+    private int rimanenti;
+
     public ServizioDTO(Long id, String nome, long prezzo, int quantita, String descrizione) {
         this.id = id;
         this.nome = nome;
@@ -19,7 +21,12 @@ public class ServizioDTO {
     public Long getId() {return id;}
     public String getNome() {return nome;}
     public long getPrezzo() {return prezzo;}
+    public void setPrezzo(long prezzo) {this.prezzo = prezzo;}
     public int getQuantita() {return quantita;}
     public String getDescrizione() {return descrizione;}
+
+    public int getRimanenti() {return rimanenti;}
+    public void setRimanenti(int rimanenti) {this.rimanenti = rimanenti;}
+
 
 }

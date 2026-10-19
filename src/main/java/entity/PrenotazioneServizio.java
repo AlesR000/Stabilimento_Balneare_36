@@ -2,6 +2,8 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class PrenotazioneServizio {
 
@@ -25,8 +27,11 @@ public class PrenotazioneServizio {
 
     public PrenotazioneServizio(Prenotazione prenotazione, ServizioAggiuntivo servizio, int quantita) {
         this.prenotazione = prenotazione;
-        this.servizio = servizio;
-        this.quantita = quantita;
+        aggiungiServizio(servizio, quantita);
+    }
+
+    public PrenotazioneServizio(ServizioAggiuntivo servizio, int quantita) {
+        aggiungiServizio(servizio, quantita);
     }
 
     //Getter e Setter
@@ -34,8 +39,8 @@ public class PrenotazioneServizio {
     public void setPrenotazione(Prenotazione prenotazione) {this.prenotazione = prenotazione;}
 
     public void aggiungiServizio(ServizioAggiuntivo servizio, int quantita) {
-        this.servizio = servizio;
-        this.quantita = quantita;
+        this.servizio = (servizio);
+        this.quantita = (quantita);
     }
 
     public ServizioAggiuntivo getServizio() {return servizio;}

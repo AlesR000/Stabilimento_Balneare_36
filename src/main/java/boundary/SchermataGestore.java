@@ -115,7 +115,7 @@ public class SchermataGestore {
                 }
             }
         });
-        /*
+
         prenotazioniButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -123,8 +123,8 @@ public class SchermataGestore {
                         !prenotazioniFrame.isDisplayable()) {
 
                     //nuovo oggetto schermata
-                    SchermataPrenotazioniGestore schermataPrenotazioniGestore =
-                            new SchermataPrenotazioniGestore();
+                    GestorePrenotazione schermataPrenotazioniGestore =
+                            new GestorePrenotazione();
 
                     prenotazioniFrame = schermataPrenotazioniGestore.apriFormGestorePrenotazioni();
 
@@ -140,7 +140,7 @@ public class SchermataGestore {
             }
         });
 
-         */
+
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

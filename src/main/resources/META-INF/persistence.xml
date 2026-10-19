@@ -13,6 +13,7 @@
         <class>entity.Gestore</class>
         <class>entity.Ombrellone</class>
         <class>entity.Prenotazione</class>
+        <class>entity.PrenotazioneServizio</class>
         <class>entity.ServizioAggiuntivo</class>
         <class>entity.Tariffa</class>
         <class>entity.Utente</class>

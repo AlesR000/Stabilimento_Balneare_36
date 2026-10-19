@@ -20,7 +20,7 @@ public class ServizioAggiuntivo {
     @OneToMany
     private List<Tariffa> tariffe = new ArrayList<>();
 
-    @OneToMany(mappedBy = "servizi")
+    @OneToMany(mappedBy = "servizio")
     private List<PrenotazioneServizio> prenotazioni = new ArrayList<>();
 
 

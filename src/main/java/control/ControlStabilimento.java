@@ -11,6 +11,9 @@ import java.util.Map;
 
 public class ControlStabilimento {
 
+
+
+
     //Funzioni Salva
     public boolean salvaOmbrellone(String fila, long prezzo){
 
@@ -58,6 +61,9 @@ public class ControlStabilimento {
 
     }
 
+
+
+
     //Funzioni di rimozione
     public boolean rimuoviOmbrellone(String fila){
 
@@ -87,6 +93,9 @@ public class ControlStabilimento {
         return registro.eliminaTariffa(id);
 
     }
+
+
+
 
     //Funzioni di Ricerca
     public static List<Long> idOmbrelloniFila(int fila){
@@ -129,8 +138,6 @@ public class ControlStabilimento {
         }
     }
 
-    //public Map<ServizioDTO, Integer> listaServiziDisponibiliInData (LocalDate data){}
-
     public static List<TariffaDTO> listaTariffe(){
 
         RegistroStabilimento registro = new RegistroStabilimento();
@@ -171,6 +178,8 @@ public class ControlStabilimento {
     }
 
 
+
+
     //Funzioni Aggiorna
     public boolean aggiornaServizio(long id, String nome, String prezzoStandard, int quantita, String descrizione){
 
@@ -190,6 +199,9 @@ public class ControlStabilimento {
 
         return true;
     }
+
+
+
 
     //Funzioni ausiliarie
     private static int filaToInt (String fila){
